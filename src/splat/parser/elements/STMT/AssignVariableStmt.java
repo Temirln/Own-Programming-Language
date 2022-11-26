@@ -1,6 +1,8 @@
 package splat.parser.elements.STMT;
 
 import splat.lexer.Token;
+import splat.parser.ParseException;
+import splat.parser.elements.ASTElement;
 import splat.parser.elements.DECL.FunctionDecl;
 import splat.parser.elements.DECL.VariableDecl;
 import splat.parser.elements.Expression;
@@ -42,6 +44,17 @@ public class AssignVariableStmt extends Statement {
 
     @Override
     public void analyze(Map<String, FunctionDecl> funcMap, Map<String, Type> varAndParamMap) throws SemanticAnalysisException {
+
+
+        if (!varAndParamMap.containsKey(getLabel())){
+            throw new SemanticAnalysisException("Variable Not Defined",getExpr());
+        }
+
+        Type labelType = varAndParamMap.get(getLabel());
+        Type exprType = getExpr().analyzeAndGetType(funcMap,varAndParamMap);
+        if (!labelType.getType().equals(exprType.getType())){
+            throw new SemanticAnalysisException("Variable Type "+labelType.getType()+" but Expression Type "+exprType.getType(),getExpr());
+        }
 
     }
 }

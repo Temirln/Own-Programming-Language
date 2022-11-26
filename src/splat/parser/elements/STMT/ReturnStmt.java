@@ -17,6 +17,13 @@ public class ReturnStmt extends Statement {
     @Override
     public void analyze(Map<String, FunctionDecl> funcMap, Map<String, Type> varAndParamMap) throws SemanticAnalysisException {
 
+        if (!varAndParamMap.containsKey("0result")){
+            throw new SemanticAnalysisException("Return statement can only be used in function body",getLine(),getColumn());
+        }
+
+        if(!varAndParamMap.get("0result").getType().equals("void")){
+            throw new SemanticAnalysisException("Non Void function cannot have simple Return statement",getLine(),getColumn());
+        }
     }
 
 

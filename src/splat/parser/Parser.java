@@ -132,9 +132,9 @@ public class Parser {
 		String[] ret_type = {"Boolean","String","Integer","void"};
 
 		String label = tokens.get(0).getValue();
-		if (!Character.isLetter(label.charAt(0))){
-			throw new ParseException("Invalid Variable",tokens.get(0));
-		}
+
+		checkLabel(tok,label);
+
 		checkNext(label);
 		checkNext("(");
 
@@ -196,10 +196,8 @@ public class Parser {
 		Token tok = tokens.get(0);
 
 		String label = tokens.get(0).getValue();
+		checkLabel(tok,label);
 
-		if (!Character.isLetter(label.charAt(0))){
-			throw new ParseException("Invalid Variable",tokens.get(0));
-		}
 		checkNext(label);
 
 		checkNext(":");
@@ -225,10 +223,11 @@ public class Parser {
 		Token tok = tokens.get(0);
 		String[] types = {"Boolean","String","Integer"};
 
+
 		String label = tokens.get(0).getValue();
-		if(!Character.isLetter(label.charAt(0))){
-			throw new ParseException("Invalid Variable",tokens.get(0));
-		}
+		checkLabel(tok,label);
+
+
 		checkNext(label);
 
 		checkNext(":");
@@ -237,6 +236,7 @@ public class Parser {
 		if(!Arrays.asList(types).contains(tokens.get(0).getValue())){
 			throw new ParseException("Incorrect Type",tokens.get(0));
 		}
+
 //		String type = tokens.get(0).getValue();
 //		checkNext(type);
 		Type type = parseType();
@@ -323,6 +323,7 @@ public class Parser {
 		Token tok = tokens.get(0);
 
 		String label = tokens.get(0).getValue();
+		checkLabel(tok,label);
 
 		checkNext(label);
 
@@ -344,6 +345,8 @@ public class Parser {
 		Token tok = tokens.get(0);
 
 		String label = tokens.get(0).getValue();
+		checkLabel(tok,label);
+
 		checkNext(label);
 		checkNext("(");
 
@@ -526,7 +529,7 @@ public class Parser {
 
 		else{
 			Token tok = tokens.get(0);
-			throw new ParseException("Statement expected", tok);
+			throw new ParseException("Expression expected", tok);
 		}
 
 	}
@@ -535,8 +538,11 @@ public class Parser {
 	 * (expr) ::= <label>
  	 */
 	private LabelExpr parseLabelExpr() throws ParseException{
+
 		Token tok = tokens.get(0);
 		String label = tokens.get(0).getValue();
+		checkLabel(tok,label);
+
 		checkNext(label);
 		return new LabelExpr(tok,label);
 	}
@@ -553,8 +559,9 @@ public class Parser {
 
 		String binaryOp = tokens.get(0).getValue();
 		if(!Arrays.asList(binaryOperations).contains(binaryOp)){
-			throw new ParseException("Non Valid Operator",tok);
+			throw new ParseException("Operator "+ binaryOp +" is Non Valid Operator",tok);
 		}
+
 		checkNext(binaryOp);
 
 		Expression expr2 = parseExpr();
@@ -611,9 +618,8 @@ public class Parser {
 		Token tok = tokens.get(0);
 
 		String label = tokens.get(0).getValue();
-		if (!Character.isLetter(label.charAt(0))) {
-			throw new ParseException("Invalid Label",tok);
-		}
+		checkLabel(tok,label);
+
 		checkNext(label);
 
 		checkNext("(");
@@ -630,4 +636,16 @@ public class Parser {
 		return new FunctionCallExpr(tok,label,args);
 	}
 
+	private void checkLabel(Token token,String label) throws ParseException{
+		String[] keywords = {"if","then","while","do","begin","end","program","is","else","print","print_line","return"};
+
+
+		if (Arrays.asList(keywords).contains(label)){
+			throw new ParseException("Keywords cannot used by as Label",token);
+		}
+
+		if(!Character.isLetter(label.charAt(0))){
+			throw new ParseException("Invalid Variable",token);
+		}
+	}
 }

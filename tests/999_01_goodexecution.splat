@@ -3,15 +3,11 @@ program
 	donothing(fun : Integer) : Integer is
 	begin
 		fun := (fun + 20);
+		print fun;
 		return fun;
 	end ;
 	
-	funny (nofun : Boolean) : void is
-	begin
-	    nofun := donothing(22);
-		print "Boo!";
-	end;
-	
 begin
 	print "Howdy!";
+	print donothing(22);
 end;

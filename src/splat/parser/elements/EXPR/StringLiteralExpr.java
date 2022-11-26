@@ -31,6 +31,10 @@ public class StringLiteralExpr extends Expression {
 
     @Override
     public Type analyzeAndGetType(Map<String, FunctionDecl> funcMap, Map<String, Type> varAndParamMap) throws SemanticAnalysisException {
-        return null;
+        Token tok = new Token(getString_literal(),getColumn(),getLine());
+
+        Type stringLiteralType = new Type(tok,"String");
+
+        return stringLiteralType;
     }
 }

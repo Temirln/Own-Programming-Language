@@ -49,5 +49,33 @@ public class IfThenElseStmt extends Statement {
     @Override
     public void analyze(Map<String, FunctionDecl> funcMap, Map<String, Type> varAndParamMap) throws SemanticAnalysisException {
 
+        Type exprType = getExpr().analyzeAndGetType(funcMap,varAndParamMap);
+
+        if (!exprType.getType().equals("Boolean")){
+            throw new SemanticAnalysisException("Expression Type should Boolean",getExpr());
+        }
+
+        for(Statement stmt : getStmts1()){
+            if (varAndParamMap.containsKey("0result")){
+                if (!varAndParamMap.get("0result").getType().equals("void") && !(getStmts1().get(getStmts1().size()-1) instanceof ReturnExStmt)){
+                    throw new SemanticAnalysisException("Non-Void Function should return Statement",stmt);
+                }
+            }
+
+            stmt.analyze(funcMap,varAndParamMap);
+        }
+
+        for (Statement stmt : getStmts2()){
+            if (varAndParamMap.containsKey("0result")){
+                if (!varAndParamMap.get("0result").getType().equals("void") && !(getStmts2().get(getStmts2().size()-1) instanceof ReturnExStmt)){
+                    throw new SemanticAnalysisException("Non-Void Function should return Statement",stmt);
+                }
+            }
+
+            stmt.analyze(funcMap,varAndParamMap);
+        }
+
+
     }
+
 }

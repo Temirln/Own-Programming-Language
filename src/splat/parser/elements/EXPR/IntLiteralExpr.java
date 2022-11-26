@@ -31,6 +31,9 @@ public class IntLiteralExpr extends Expression {
 
     @Override
     public Type analyzeAndGetType(Map<String, FunctionDecl> funcMap, Map<String, Type> varAndParamMap) throws SemanticAnalysisException {
-        return null;
+
+        Token tok = new Token(getInt_literal(),getColumn(),getLine());
+        Type type = new Type(tok,"Integer");
+        return type;
     }
 }

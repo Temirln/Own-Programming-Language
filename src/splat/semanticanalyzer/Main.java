@@ -13,12 +13,13 @@ import java.util.List;
 public class Main {
     public static void main (String[] args) throws LexException, ParseException, SemanticAnalysisException {
         System.out.println("Main");
-        File file = new File("tests/999_03_goodsemantics.splat");
+        File file = new File("tests/gk_01_badsemantics.splat");
         Lexer lexer = new Lexer(file);
         List<Token> tokenz = lexer.tokenize();
         Parser parser = new Parser(tokenz);
         ProgramAST prog = parser.parse();
 
+        System.out.println(prog);
         SemanticAnalyzer analyzer = new SemanticAnalyzer(prog);
         analyzer.analyze();
 

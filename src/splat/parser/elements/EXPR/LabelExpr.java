@@ -31,6 +31,11 @@ public class LabelExpr extends Expression {
 
     @Override
     public Type analyzeAndGetType(Map<String, FunctionDecl> funcMap, Map<String, Type> varAndParamMap) throws SemanticAnalysisException {
-        return null;
+
+        if (!varAndParamMap.containsKey(getLabel())){
+            throw new SemanticAnalysisException("Variable doesn't defined",getLine(),getColumn());
+        }
+        return varAndParamMap.get(getLabel());
+
     }
 }

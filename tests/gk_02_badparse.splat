@@ -1,9 +1,11 @@
 program 
 flag:Boolean;
 begin
-  flag := true;
+  flag := true + false;
   if (flag == true)
   then
   print "Hello, world.";
+  else 
+  print_line;
   end if;
 end;

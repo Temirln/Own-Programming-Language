@@ -27,8 +27,10 @@ public class Lexer {
 			while ((line_of_file = reader.readLine()) != null) {
 				column = 0;
 				token_value = "";
+
 				while(line_of_file.length() > column){
 
+//					WHITESPACE OR NEWLINE
 					if (line_of_file.charAt(column) == ' ' || line_of_file.charAt(column) == '\n'|| line_of_file.charAt(column) == '\r' || line_of_file.charAt(column) == '\t') {
 						if (token_value.length() > 0) {
 							tokens.add(new Token(token_value,column,line));
@@ -36,11 +38,13 @@ public class Lexer {
 						}
 						column++;
 					}
+//					DIGIT TOKEN CHECKING
 					else if (Character.isDigit(line_of_file.charAt(column))) {
 
 						token_value += line_of_file.charAt(column);
 						column++;
 					}
+//					Label Token Checking
 					else if (Character.isLetter(line_of_file.charAt(column)) || line_of_file.charAt(column) == '_') {
 						if (token_value.length() >0 && Character.isDigit(token_value.charAt(0))){
 							throw new LexException("Incorrect variable",line,column+1); // with 123name like
@@ -49,6 +53,7 @@ public class Lexer {
 						token_value += line_of_file.charAt(column);
 						column++;
 					}
+//						String Token Checking
 					else if (line_of_file.charAt(column) == '"') {
 						if(token_value.length() > 0){
 							tokens.add(new Token(token_value,column,line));
@@ -74,8 +79,9 @@ public class Lexer {
 						column++;
 						token_value = "";
 					}
+//					OPERATORS CHECKING
 					else{
-						final String[] VALID_OPERATORS = {"==", ">=", "<=",":=", "+", "-","*","%", "(", ")","{","}","[","]", ":", ";",".",",",">","<","&","#","/"};
+						final String[] VALID_OPERATORS = {"==", ">=", "<=",":=", "+", "-","*","%", "(", ")",":",";",".",",",">","<","/"};
 						boolean foundOperator = false;
 
 						for (String operator : VALID_OPERATORS) {
@@ -101,8 +107,7 @@ public class Lexer {
 				}
 
 				if (token_value.length() > 0) {
-					tokens.add(new Token(token_value,column,line));
-					token_value = "";
+					tokens.add(new Token(token_value, column, line));
 				}
 
 				line++;

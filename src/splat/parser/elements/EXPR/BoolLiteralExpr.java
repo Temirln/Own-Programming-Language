@@ -31,6 +31,8 @@ public class BoolLiteralExpr extends Expression {
 
     @Override
     public Type analyzeAndGetType(Map<String, FunctionDecl> funcMap, Map<String, Type> varAndParamMap) throws SemanticAnalysisException {
-        return null;
+        Token tok = new Token(getBool_literal(),getColumn(),getLine());
+        Type boolType = new Type(tok,"Boolean");
+        return boolType;
     }
 }

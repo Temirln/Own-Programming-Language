@@ -40,6 +40,16 @@ public class WhileLoopStmt extends Statement {
 
     @Override
     public void analyze(Map<String, FunctionDecl> funcMap, Map<String, Type> varAndParamMap) throws SemanticAnalysisException {
+        Type exprType = getExpr().analyzeAndGetType(funcMap,varAndParamMap);
+
+        if (!exprType.getType().equals("Boolean")){
+            throw new SemanticAnalysisException("Expression Type should be Boolean",getExpr());
+        }
+
+        for (Statement stmt : getStmts()){
+            stmt.analyze(funcMap,varAndParamMap);
+        }
+
 
     }
 }

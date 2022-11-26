@@ -5,7 +5,7 @@ program
 	begin
 		return (n / 2);
 	end;
-
+	
 	hailstone(n : Integer) : void is
 		next : Integer;
 	begin
@@ -21,7 +21,7 @@ program
 		end if;
 		hailstone(next);
 	end;
-
+	
 	goUp(next : Integer) : Integer is
 	begin
 		next := ((3 * next) + 1);

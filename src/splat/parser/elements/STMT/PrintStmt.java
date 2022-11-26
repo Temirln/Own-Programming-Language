@@ -32,6 +32,6 @@ public class PrintStmt extends Statement {
 
     @Override
     public void analyze(Map<String, FunctionDecl> funcMap, Map<String, Type> varAndParamMap) throws SemanticAnalysisException {
-
+        getExpr().analyzeAndGetType(funcMap,varAndParamMap);
     }
 }

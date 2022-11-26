@@ -39,6 +39,30 @@ public class FunctionCallStmt extends Statement {
 
     @Override
     public void analyze(Map<String, FunctionDecl> funcMap, Map<String, Type> varAndParamMap) throws SemanticAnalysisException {
+        String funcLabel = getLabel();
 
+        if (!funcMap.containsKey(funcLabel)){
+            throw new SemanticAnalysisException("There is no function with given label "+getLabel(),getLine(),getColumn());
+        }
+
+        if (!funcMap.get(funcLabel).getRetType().getType().equals("void")){
+            throw new SemanticAnalysisException("Function Call Statement should be void for call",getLine(),getColumn());
+        }
+
+
+        if (getArgs().size() != funcMap.get(funcLabel).getParams().size()){
+            throw new SemanticAnalysisException("Incorrect number of input parameters ",getArgs().get(0));
+        }
+
+        FunctionDecl func = funcMap.get(funcLabel);
+
+        for (int i = 0;i<getArgs().size();i++){
+
+            Type exprType = getArgs().get(i).analyzeAndGetType(funcMap,varAndParamMap);
+            if (!func.getParams().get(i).getType().getType().equals(exprType.getType())){
+                throw new SemanticAnalysisException("Types of parameters doesn't match",func.getParams().get(i));
+            }
+
+        }
     }
 }

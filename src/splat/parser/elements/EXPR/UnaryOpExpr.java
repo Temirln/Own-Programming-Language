@@ -38,6 +38,33 @@ public class UnaryOpExpr extends Expression {
 
     @Override
     public Type analyzeAndGetType(Map<String, FunctionDecl> funcMap, Map<String, Type> varAndParamMap) throws SemanticAnalysisException {
-        return null;
+
+        Type exprType = getExpr().analyzeAndGetType(funcMap,varAndParamMap);
+        String unaryOp = getUnaryOp();
+
+        switch (unaryOp){
+            case "not":
+                if (!exprType.getType().equals("Boolean")){
+                    throw new SemanticAnalysisException("Expression type should be Boolean ",getExpr());
+                }
+                else{
+                    return exprType;
+                }
+            case "-":
+                if (!exprType.getType().equals("Integer")){
+                    throw new SemanticAnalysisException("Expression type should be Integer",getExpr());
+                }
+                else {
+                    return exprType;
+                }
+            default:
+                throw new SemanticAnalysisException("Something went wrong",getExpr());
+        }
+
+
+
+//        return exprType;
+
+        //        return null;
     }
 }
