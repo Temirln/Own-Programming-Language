@@ -1,7 +1,6 @@
 package splat.parser.elements;
 
 import splat.lexer.Token;
-import splat.parser.elements.DECL.FunctionDecl;
 import splat.semanticanalyzer.SemanticAnalysisException;
 
 import java.util.Map;

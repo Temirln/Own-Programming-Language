@@ -7,5 +7,18 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://D:/Downloads/Hava/Phase 4/Mars45.jar!/" />
+        </CLASSES>
+        <JAVADOC>
+          <root url="jar://D:/Downloads/Hava/Phase 4/Mars45.jar!/docs" />
+        </JAVADOC>
+        <SOURCES>
+          <root url="jar://D:/Downloads/Hava/Phase 4/Mars45.jar!/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
   </component>
 </module>
