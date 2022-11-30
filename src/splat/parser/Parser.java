@@ -6,8 +6,10 @@ import java.util.List;
 
 import splat.lexer.Token;
 import splat.parser.elements.*;
-import splat.parser.elements.FunctionDecl;
-import splat.parser.elements.VariableDecl;
+import splat.parser.elements.EXPR.*;
+import splat.parser.elements.DECL.FunctionDecl;
+import splat.parser.elements.STMT.*;
+import splat.parser.elements.DECL.VariableDecl;
 
 public class Parser {
 
@@ -136,9 +138,9 @@ public class Parser {
 		checkNext(label);
 		checkNext("(");
 
-		List<VariableDecl> params = new ArrayList<VariableDecl>();
+		List<Param> params = new ArrayList<>();
 		while (!peekNext(")")){
-			VariableDecl param = parseParams();
+			Param param = parseParams();
 			params.add(param);
 			if (!peekNext(")")){
 				checkNext(",");
@@ -190,7 +192,7 @@ public class Parser {
 	/*
 	 * <param> ::= <label> : <type>
 	 */
-	private VariableDecl parseParams() throws ParseException{
+	private Param parseParams() throws ParseException{
 		Token tok = tokens.get(0);
 
 		String label = tokens.get(0).getValue();
@@ -209,7 +211,7 @@ public class Parser {
 
 		Type type = parseType();
 
-		return new VariableDecl(tok,label,type);
+		return new Param(tok,label,type);
 
 	}
 

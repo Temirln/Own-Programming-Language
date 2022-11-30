@@ -1,14 +1,14 @@
 package splat.executor;
 
-import mars.MarsLaunch;
 import splat.Splat;
 import splat.SplatException;
 import splat.parser.elements.*;
+import splat.parser.elements.DECL.FunctionDecl;
+import splat.parser.elements.DECL.VariableDecl;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 public class Executor {
 
@@ -24,7 +24,9 @@ public class Executor {
 
 		// Convert the AST into a MIPS program
 		convertASTtoMIPS();
+//		System.out.println("\nconverted\n");
 
+//		mipsFile = new File("MipsProg.mips");
 		// Save the program to a file
 		try {
 			saveMIPSCodeToFile();
@@ -35,7 +37,7 @@ public class Executor {
 
 		// Run the MIPS program
 		int exitCode = MIPSRunner.runMIPSProg(mipsFile);
-
+//		System.out.println(MIPSRunner);
 		// Take care of any errors
 		if (exitCode == -1) {
 			throw new ExecutionException("Divide by zero error.");
@@ -51,6 +53,7 @@ public class Executor {
 	private void convertASTtoMIPS() throws ExecutionException {
 
 		mipsCode = convertToMIPS(progAST);
+
 	}
 
 	private void saveMIPSCodeToFile() throws IOException {
@@ -73,15 +76,23 @@ public class Executor {
 
 		// Extract the variables for the main program
 		List<VariableDecl> varDecls = new ArrayList<>();
+
 		for (Declaration decl : progAST.getDecls()) {
 			if (decl instanceof VariableDecl) {
+
 				VariableDecl vdecl = (VariableDecl)decl;
 				varDecls.add(vdecl);
+
 			}
 		}
 
+
+//		System.out.println(varDecls);
+
 		// Create a new frame info object for the "main" function
 		StackFrameInfo frameInfo = new StackFrameInfo("main", varDecls);
+
+//		System.out.println(frameInfo.numberOfVars());
 
 		// Convert the main program body to code
 		for (Statement stmt : progAST.getStmts()) {
@@ -105,6 +116,7 @@ public class Executor {
 			}
 		}
 
+		System.out.println(mipsCode+"\n");
 		return mipsCode;
 	}
 

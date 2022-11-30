@@ -2,14 +2,11 @@ package splat.semanticanalyzer;
 
 import java.util.*;
 
-import splat.parser.elements.Declaration;
-import splat.parser.elements.FunctionDecl;
-import splat.parser.elements.ProgramAST;
-import splat.parser.elements.IfThenElseStmt;
-import splat.parser.elements.ReturnExStmt;
-import splat.parser.elements.Statement;
-import splat.parser.elements.Type;
-import splat.parser.elements.VariableDecl;
+import splat.parser.elements.*;
+import splat.parser.elements.DECL.FunctionDecl;
+import splat.parser.elements.DECL.VariableDecl;
+import splat.parser.elements.STMT.IfThenElseStmt;
+import splat.parser.elements.STMT.ReturnExStmt;
 
 
 public class SemanticAnalyzer {
@@ -32,6 +29,7 @@ public class SemanticAnalyzer {
 		// This sets the maps that will be needed later when we need to
 		// typecheck variable references and function calls in the
 		// program body
+
 		setProgVarAndFuncMaps();
 
 		// Perform semantic analysis on the functions
@@ -44,6 +42,7 @@ public class SemanticAnalyzer {
 		for (Statement stmt : progAST.getStmts()) {
 			stmt.analyze(funcMap, progVarMap);
 		}
+
 	}
 
 	private void analyzeFuncDecl(FunctionDecl funcDecl) throws SemanticAnalysisException {
@@ -74,11 +73,11 @@ public class SemanticAnalyzer {
 
 		varAndParam.put("0result",funcDecl.getRetType());
 
-		for (VariableDecl params : funcDecl.getParams()){
+		for (Param params : funcDecl.getParams()){
 			varAndParam.put(params.getLabel(),params.getType());
 		}
 
-		for (VariableDecl localVariable : funcDecl.getLoc_var_decls()){
+		for (VariableDecl localVariable : funcDecl.getLocalVarDecls()){
 			varAndParam.put(localVariable.getLabel(),localVariable.getType());
 		}
 
@@ -95,11 +94,11 @@ public class SemanticAnalyzer {
 		labels.add(funcLabel);
 
 		//	Check Parameters
-		for (VariableDecl variableDecl : funcDecl.getParams()){
-			String label = variableDecl.getLabel().toString();
+		for (Param param : funcDecl.getParams()){
+			String label = param.getLabel().toString();
 			if (labels.contains(label) || funcMap.containsKey(label)) {
 				throw new SemanticAnalysisException("Cannot have duplicate label '"
-						+ label + "' in program", variableDecl);
+						+ label + "' in program", param);
 			} else {
 				labels.add(label);
 			}
@@ -107,7 +106,7 @@ public class SemanticAnalyzer {
 
 		//Check Local VAriables
 
-		for (VariableDecl localVariable : funcDecl.getLoc_var_decls()){
+		for (VariableDecl localVariable : funcDecl.getLocalVarDecls()){
 			String label = localVariable.getLabel().toString();
 			if (labels.contains(label) || funcMap.containsKey(label)) {
 				throw new SemanticAnalysisException("Cannot have duplicate label '"

@@ -1,6 +1,9 @@
 package splat.parser.elements;
 
+import splat.executor.MIPSCode;
+import splat.executor.StackFrameInfo;
 import splat.lexer.Token;
+import splat.parser.elements.DECL.FunctionDecl;
 import splat.semanticanalyzer.SemanticAnalysisException;
 
 import java.util.Map;
@@ -50,4 +53,10 @@ public abstract class Expression extends ASTElement {
 	 */
 //	public abstract Value evaluate(Map<String, FunctionDecl> funcMap,
 //                                 Map<String, Value> varAndParamMap);
+
+
+	public abstract void computeAndStore(
+			MIPSCode mipsCode,	// Mips program being created
+			StackFrameInfo frameInfo, //Information about the current function we are in (maybe the main program)
+			int regnum);  // Number of the register to store the result of the expression; all registers before that are already in use
 }

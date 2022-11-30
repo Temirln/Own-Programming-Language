@@ -1,8 +1,8 @@
 package splat.executor;
 
-import splat.parser.elements.FunctionDecl;
+import splat.parser.elements.DECL.FunctionDecl;
 import splat.parser.elements.Param;
-import splat.parser.elements.VariableDecl;
+import splat.parser.elements.DECL.VariableDecl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,12 +39,14 @@ public class StackFrameInfo {
                 return regNum;
             }
             regNum++;
+//            System.out.println("here");
         }
         for (VariableDecl varDecl : varDecls) {
             if (varDecl.getLabel().toString().equals(varName)) {
                 return regNum;
             }
             regNum++;
+//            System.out.println("here");
         }
         // This should never happen
         return 99999;

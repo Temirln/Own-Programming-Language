@@ -1,0 +1,78 @@
+############ data section (for strings) ############
+.data
+new_line_string: .asciiz "\n"
+false_string: .asciiz "false"
+true_string: .asciiz "true"
+string_lit_label_1: .asciiz "program started"
+string_lit_label_2: .asciiz "param2 is false"
+string_lit_label_3: .asciiz "param2 is true"
+string_lit_label_4: .asciiz "myFunction() called"
+.text
+############ main program ############
+main: move $fp $sp
+######### ASSIGNVARIABLESTMT ##########
+li $v0,4
+la $a0,true_string
+move $s2,$v0
+move $t2,$a0
+
+######### ASSIGNVARIABLESTMT ############
+######### PRINTSTMT ############
+li $v0,4
+la $a0,string_lit_label_1
+syscall
+######### PRINTSTMT ############
+############ PRINTLINESTMT ##############
+li $v0,4
+la $a0, new_line_string
+syscall
+############ PRINTLINESTMT ##############
+############ FUNCTIONCALLSTMT ##############
+############# LABELEXPR ###############
+addi $a0,$t0,0
+move $v0,$s0
+############# LABELEXPR ###############
+############# LABELEXPR ###############
+addi $a0,$t2,0
+move $v0,$s2
+############# LABELEXPR ###############
+jal myFunction
+############ FUNCTIONCALLSTMT ##############
+li $v0 10
+syscall  #terminating program normally
+fail_and_exit: li $a0 -1
+li $v0 17
+syscall  #terminating program with error
+############ FUNCTIONDECL ##############
+myFunction: nop
+######### IFELSETHENSTMT ############
+############# LABELEXPR ###############
+addi $a0,$t1,0
+move $v0,$s1
+############# LABELEXPR ###############
+li $v0,4
+la $a1,true_string
+beq $a0,$a1,if_label_1
+######### PRINTSTMT ############
+li $v0,4
+la $a0,string_lit_label_2
+syscall
+######### PRINTSTMT ############
+j next_if_label_1
+if_label_1:
+######### PRINTSTMT ############
+li $v0,4
+la $a0,string_lit_label_3
+syscall
+######### PRINTSTMT ############
+next_if_label_1:
+
+######### IFELSETHENTSTMT ############
+jr $ra
+######### PRINTSTMT ############
+li $v0,4
+la $a0,string_lit_label_4
+syscall
+######### PRINTSTMT ############
+myFunction_end: jr $ra
+############ FUNCTIONDECL ##############
