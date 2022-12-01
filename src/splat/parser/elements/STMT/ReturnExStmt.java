@@ -52,6 +52,13 @@ public class ReturnExStmt extends Statement {
 
     @Override
     public void convertToMIPS(MIPSCode mipsCode, StackFrameInfo frameInfo) {
+        mipsCode.append("########################## RETURNEXSTMT ##########################\n");
+
+        getExpr().computeAndStore(mipsCode,frameInfo,0);
+
+        mipsCode.append("addi $v1,$a0,0\n");
+//        mipsCode.append("jal "+frameInfo.getFunctionName()+"_end\n");
         mipsCode.append("jr $ra\n");
+        mipsCode.append("########################## RETURNEXSTMT ##########################\n");
     }
 }

@@ -102,7 +102,7 @@ public class BinaryOpExpr extends Expression {
 
     @Override
     public void computeAndStore(MIPSCode mipsCode, StackFrameInfo frameInfo, int regnum) {
-        mipsCode.append("############# BINARYOPEXPR ###############\n");
+        mipsCode.append("################ BINARYOPEXPR ################\n");
         getExpr1().computeAndStore(mipsCode,frameInfo, regnum);
         getExpr2().computeAndStore(mipsCode,frameInfo, regnum+1);
         String binop = getBinaryOp();
@@ -191,6 +191,6 @@ public class BinaryOpExpr extends Expression {
                 mipsCode.append("next_" + label + ":\n");
             }
         }
-        mipsCode.append("############# BINARYOPEXPR ###############\n");
+        mipsCode.append("################ BINARYOPEXPR ################\n");
     }
 }

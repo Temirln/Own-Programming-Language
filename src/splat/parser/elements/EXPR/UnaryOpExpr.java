@@ -73,6 +73,7 @@ public class UnaryOpExpr extends Expression {
 
     @Override
     public void computeAndStore(MIPSCode mipsCode, StackFrameInfo frameInfo, int regnum) {
+        mipsCode.append("################ UNARYOP ################\n");
         Expression expression = getExpr();
         getExpr().computeAndStore(mipsCode,frameInfo,0);
         String unaryOp = getUnaryOp();
@@ -90,11 +91,12 @@ public class UnaryOpExpr extends Expression {
                 mipsCode.append("swap_"+general_label+":\n");
                 mipsCode.append("move $a0,$a2\n");
                 mipsCode.append("next_"+general_label+":\n");
-
-
+                break;
             case "-":
                 mipsCode.append("sub $a0,$zero,$a0\n");
+                break;
 
         }
+        mipsCode.append("################ UNARYOP ################\n");
     }
 }

@@ -28,7 +28,6 @@ public class Splat {
 		Parser parser = new Parser(tokens);
 		ProgramAST progAST = parser.parse();
 
-		System.out.println(progAST);
 		// Step 3.  Semantic Analysis
 		SemanticAnalyzer analyzer = new SemanticAnalyzer(progAST);
 		analyzer.analyze();

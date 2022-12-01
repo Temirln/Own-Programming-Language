@@ -60,7 +60,7 @@ public class WhileLoopStmt extends Statement {
     @Override
     public void convertToMIPS(MIPSCode mipsCode, StackFrameInfo frameInfo) {
 
-        mipsCode.append("######### WHILESTMT ############\n");
+        mipsCode.append("########################## WHILESTMT ##########################\n");
 
         String while_label = LabelGenerator.getNewWhileLabel();
 
@@ -80,7 +80,7 @@ public class WhileLoopStmt extends Statement {
         }
         mipsCode.append("j "+while_label+"\n");
         mipsCode.append("exit_"+while_label+":\n");
-        mipsCode.append("######### WHILESTMT ############\n");
+        mipsCode.append("########################## WHILESTMT ##########################\n");
 
     }
 }

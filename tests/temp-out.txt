@@ -1,27 +1,6 @@
-############ data section (for strings) ############
-.data
-new_line_string: .asciiz "\n"
-false_string: .asciiz "false"
-true_string: .asciiz "true"
-string_lit_label_8: .asciiz "out1"
-string_lit_label_9: .asciiz "out2"
-.text
-############ main program ############
-main: move $fp $sp
-######### PRINTSTMT ############
-li $v0,4
-la $a0,string_lit_label_8
-syscall
-######### PRINTSTMT ############
-######### PRINTSTMT ############
-li $v0,4
-la $a0,string_lit_label_9
-syscall
-######### PRINTSTMT ############
-li $v0 10
-syscall  #terminating program normally
-fail_and_exit: li $a0 -1
-li $v0 17
-syscall  #terminating program with error
-
-
+*
+**
+***
+****
+*****
+

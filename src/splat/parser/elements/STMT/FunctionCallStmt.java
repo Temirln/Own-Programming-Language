@@ -1,5 +1,6 @@
 package splat.parser.elements.STMT;
 
+import splat.executor.LabelGenerator;
 import splat.executor.MIPSCode;
 import splat.executor.StackFrameInfo;
 import splat.lexer.Token;
@@ -70,14 +71,27 @@ public class FunctionCallStmt extends Statement {
 
     @Override
     public void convertToMIPS(MIPSCode mipsCode, StackFrameInfo frameInfo) {
-        mipsCode.append("############ FUNCTIONCALLSTMT ##############\n");
+        mipsCode.append("########################## FUNCTIONCALLSTMT ##########################\n");
 
         String label = getLabel();
+        int regCount = 0;
         for (Expression expr : getArgs()){
-            expr.computeAndStore(mipsCode,frameInfo,0);
+            expr.computeAndStore(mipsCode,frameInfo,regCount);
+            regCount++;
         }
 
+        ;
+        mipsCode.append("addi $sp, $sp, -12\n");
+        mipsCode.append("sw $ra, 8($sp)\n");
         mipsCode.append("jal "+label+"\n");
-        mipsCode.append("############ FUNCTIONCALLSTMT ##############\n");
+        if (frameInfo.getFunctionName().equals("main")){
+            mipsCode.append(label+"_return:\n");
+        }
+        mipsCode.append("lw $ra, 8($sp)\n");
+        mipsCode.append("addi $sp, $sp, 12\n");
+
+
+//        mipsCode.append("syscall\n");
+        mipsCode.append("########################## FUNCTIONCALLSTMT ##########################\n");
     }
 }

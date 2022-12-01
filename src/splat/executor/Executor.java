@@ -116,7 +116,7 @@ public class Executor {
 			}
 		}
 
-		System.out.println(mipsCode+"\n");
+//		System.out.println(mipsCode+"\n");
 		return mipsCode;
 	}
 

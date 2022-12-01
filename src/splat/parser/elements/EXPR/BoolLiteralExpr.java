@@ -41,6 +41,7 @@ public class BoolLiteralExpr extends Expression {
     @Override
     public void computeAndStore(MIPSCode mipsCode, StackFrameInfo frameInfo, int regnum) {
 //        mipsCode.append("li $s"+regnum+",4\n");
+        mipsCode.append("################ BOOLLITERALEXPR ################\n");
         mipsCode.append("li $v0,4\n");
         if (getBool_literal().equals("true")){
 
@@ -50,6 +51,7 @@ public class BoolLiteralExpr extends Expression {
         else{
             mipsCode.append("la $a0,false_string\n");
         }
+        mipsCode.append("################ BOOLLITERALEXPR ################\n");
 
     }
 }

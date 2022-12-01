@@ -64,14 +64,22 @@ public class FunctionDecl extends Declaration {
 	}
 
 	public void convertToMIPS(MIPSCode mipsCode){
-		mipsCode.append("############ FUNCTIONDECL ##############\n");
+		mipsCode.append("############################### FUNCTIONDECL ################################\n");
 		StackFrameInfo frameInfo = new StackFrameInfo(FunctionDecl.this);
 //		System.out.println(frameInfo.getFunctionName());
 
 		mipsCode.append(getLabel() + ": nop\n");
 
 		for(VariableDecl locVar : getLocalVarDecls()){
-			mipsCode.append("addi $s"+frameInfo.getRegisterNum(locVar.getLabel())+",$zero,0\n");
+
+			mipsCode.append("addi $t"+frameInfo.getRegisterNum(locVar.getLabel())+",$zero,0\n");
+		}
+
+		for (Param param : getParams()){
+//			mipsCode.append("$sp,$sp,-4");
+//			mipsCode.append("sw $s");
+//			mipsCode.append("move $v0"+"$s"+frameInfo.);
+			mipsCode.append("move $t"+frameInfo.getRegisterNum(param.getLabel())+",$a"+frameInfo.getRegisterNum(param.getLabel())+"\n");
 		}
 
 
@@ -79,8 +87,10 @@ public class FunctionDecl extends Declaration {
 			stmt.convertToMIPS(mipsCode,frameInfo);
 		}
 
+
 		mipsCode.append(getLabel() + "_end: jr $ra\n");
-		mipsCode.append("############ FUNCTIONDECL ##############\n");
+//		mipsCode.append("\n");
+		mipsCode.append("############################### FUNCTIONDECL ################################\n");
 	}
 
 }

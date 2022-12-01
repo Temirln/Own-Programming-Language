@@ -60,7 +60,7 @@ public class AssignVariableStmt extends Statement {
     @Override
     public void convertToMIPS(MIPSCode mipsCode, StackFrameInfo frameInfo) {
 //        System.out.println(getExpr());
-        mipsCode.append("######### ASSIGNVARIABLESTMT ##########\n");
+        mipsCode.append("########################## ASSIGNVARIABLESTMT ##########################\n");
         getExpr().computeAndStore(mipsCode,frameInfo,0);
 //        System.out.println("Regnum "+frameInfo.getRegisterNum(getLabel()));
 //        System.out.println(frameInfo.numberOfVars());
@@ -76,6 +76,6 @@ public class AssignVariableStmt extends Statement {
         mipsCode.append("move $s"+reg+",$v0\n");
         mipsCode.append("move $t" + reg + ",$a0\n\n");
 
-        mipsCode.append("######### ASSIGNVARIABLESTMT ############\n");
+        mipsCode.append("########################## ASSIGNVARIABLESTMT ##########################\n");
     }
 }

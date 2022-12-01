@@ -88,11 +88,11 @@ public class IfThenElseStmt extends Statement {
     @Override
     public void convertToMIPS(MIPSCode mipsCode, StackFrameInfo frameInfo) {
         Expression expr = getExpr();
-        mipsCode.append("######### IFELSETHENSTMT ############\n");
+        mipsCode.append("########################## IFELSETHENSTMT ##########################\n");
 
         String if_label = LabelGenerator.getNewIfLabel();
 
-        getExpr().computeAndStore(mipsCode,frameInfo,0);
+        getExpr().computeAndStore(mipsCode,frameInfo, 0);
         mipsCode.append("li $v0,4\n");
         mipsCode.append("la $a1,true_string\n");
         mipsCode.append("beq $a0,$a1,"+if_label+"\n");
@@ -111,7 +111,7 @@ public class IfThenElseStmt extends Statement {
         }
         mipsCode.append("next_"+if_label+":\n\n");
 
-        mipsCode.append("######### IFELSETHENTSTMT ############\n");
+        mipsCode.append("########################## IFELSETHENTSTMT ##########################\n");
 
     }
 

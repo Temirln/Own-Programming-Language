@@ -76,15 +76,19 @@ public class FunctionCallExpr extends Expression {
 
     @Override
     public void computeAndStore(MIPSCode mipsCode, StackFrameInfo frameInfo, int regnum) {
-        mipsCode.append("############ FUNCTIONCALLEXPR ##############\n");
+        mipsCode.append("################ FUNCTIONCALLEXPR ################\n");
+
+        int regcount = 0;
         for(Expression expr : getArgs()){
-            expr.computeAndStore(mipsCode,frameInfo,0);
+            expr.computeAndStore(mipsCode,frameInfo,regcount);
+            regcount++;
         }
 
         String label = getLabel();
         mipsCode.append("jal "+label+"\n");
 
 
-        mipsCode.append("############ FUNCTIONCALLEXPR ##############\n");
+        mipsCode.append("addi $a0,$v1,0\n");
+        mipsCode.append("################ FUNCTIONCALLEXPR ################\n");
     }
 }

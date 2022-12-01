@@ -42,9 +42,12 @@ public class IntLiteralExpr extends Expression {
     @Override
     public void computeAndStore(MIPSCode mipsCode, StackFrameInfo frameInfo, int regnum) {
 //        mipsCode.append("li $s"+regnum+",1\n");
+        mipsCode.append("################ INTLITERALEXPR ################\n");
         mipsCode.append("li $v0,1\n");
 //        mipsCode.append();
+        mipsCode.append("li $s"+regnum+",1\n");
         mipsCode.append("li $a"+regnum+","+getInt_literal()+"\n");
+        mipsCode.append("################ INTLITERALEXPR ################\n");
 
     }
 }

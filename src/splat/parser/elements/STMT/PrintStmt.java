@@ -41,7 +41,7 @@ public class PrintStmt extends Statement {
     @Override
     public void convertToMIPS(MIPSCode mipsCode, StackFrameInfo frameInfo) {
         int regnum = frameInfo.numberOfVars();
-        mipsCode.append("######### PRINTSTMT ############\n");
+        mipsCode.append("########################## PRINTSTMT ##########################\n");
 
         Expression expr = getExpr();
 
@@ -51,6 +51,6 @@ public class PrintStmt extends Statement {
 
         getExpr().computeAndStore(mipsCode,frameInfo, 0);
         mipsCode.append("syscall\n");
-        mipsCode.append("######### PRINTSTMT ############\n");
+        mipsCode.append("########################## PRINTSTMT ##########################\n");
     }
 }
