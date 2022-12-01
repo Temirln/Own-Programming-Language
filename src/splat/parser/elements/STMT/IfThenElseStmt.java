@@ -74,7 +74,8 @@ public class IfThenElseStmt extends Statement {
 
         for (Statement stmt : getStmts2()){
             if (varAndParamMap.containsKey("0result")){
-                if (!varAndParamMap.get("0result").getType().equals("void") && !(getStmts2().get(getStmts2().size()-1) instanceof ReturnExStmt)){
+                Statement stmt_check = getStmts2().get(getStmts2().size()-1);
+                if (!varAndParamMap.get("0result").getType().equals("void") && !(stmt_check instanceof ReturnExStmt || stmt_check instanceof IfThenElseStmt)){
                     throw new SemanticAnalysisException("Non-Void Function should return Statement",stmt);
                 }
             }

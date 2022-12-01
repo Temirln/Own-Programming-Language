@@ -4,6 +4,7 @@ import splat.executor.MIPSCode;
 import splat.executor.StackFrameInfo;
 import splat.lexer.Token;
 import splat.parser.elements.*;
+import splat.parser.elements.EXPR.LabelExpr;
 
 import java.util.List;
 
@@ -71,7 +72,6 @@ public class FunctionDecl extends Declaration {
 		mipsCode.append(getLabel() + ": nop\n");
 
 		for(VariableDecl locVar : getLocalVarDecls()){
-
 			mipsCode.append("addi $t"+frameInfo.getRegisterNum(locVar.getLabel())+",$zero,0\n");
 		}
 
@@ -79,6 +79,8 @@ public class FunctionDecl extends Declaration {
 //			mipsCode.append("$sp,$sp,-4");
 //			mipsCode.append("sw $s");
 //			mipsCode.append("move $v0"+"$s"+frameInfo.);
+
+
 			mipsCode.append("move $t"+frameInfo.getRegisterNum(param.getLabel())+",$a"+frameInfo.getRegisterNum(param.getLabel())+"\n");
 		}
 
@@ -86,7 +88,6 @@ public class FunctionDecl extends Declaration {
 		for (Statement stmt : getStmts()){
 			stmt.convertToMIPS(mipsCode,frameInfo);
 		}
-
 
 		mipsCode.append(getLabel() + "_end: jr $ra\n");
 //		mipsCode.append("\n");

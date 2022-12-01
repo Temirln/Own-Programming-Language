@@ -108,7 +108,11 @@ public class BinaryOpExpr extends Expression {
         String binop = getBinaryOp();
         String label = LabelGenerator.getNewGeneralLabel();
         switch (binop) {
-            case "+" -> mipsCode.append("add $a" + regnum + ",$a" + regnum + ",$a" + (regnum + 1) + "\n");
+            case "+" -> {
+
+                mipsCode.append("add $a" + regnum + ",$a" + regnum + ",$a" + (regnum + 1) + "\n");
+            }
+
             case "-" -> mipsCode.append("sub $a" + regnum + ",$a" + regnum + ",$a" + (regnum + 1) + "\n");
             case "/" -> mipsCode.append("div $a" + regnum + ",$a" + regnum + ",$a" + (regnum + 1) + "\n");
             case "*" -> mipsCode.append("mul $a" + regnum + ",$a" + regnum + ",$a" + (regnum + 1) + "\n");

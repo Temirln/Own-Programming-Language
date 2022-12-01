@@ -38,7 +38,7 @@ public class SplatTester {
 
 		// First, we get the testing files
 
-		testDir = new File("tests");
+		testDir = new File("tests2");
 
 		System.out.print("Opening test directory...");
 
