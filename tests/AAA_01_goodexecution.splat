@@ -49,5 +49,5 @@ program
 	end;
 	
 begin
-	kvass(2);
+	kvass(100);
 end;

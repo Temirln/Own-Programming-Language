@@ -42,14 +42,14 @@ public class BoolLiteralExpr extends Expression {
     public void computeAndStore(MIPSCode mipsCode, StackFrameInfo frameInfo, int regnum) {
 //        mipsCode.append("li $s"+regnum+",4\n");
         mipsCode.append("################ BOOLLITERALEXPR ################\n");
-        mipsCode.append("li $v0,4\n");
+        mipsCode.append("   li $v0,4\n");
         if (getBool_literal().equals("true")){
 
-            mipsCode.append("la $a0,true_string\n");
+            mipsCode.append("   la $a0,true_string\n");
         }
 
         else{
-            mipsCode.append("la $a0,false_string\n");
+            mipsCode.append("   la $a0,false_string\n");
         }
         mipsCode.append("################ BOOLLITERALEXPR ################\n");
 

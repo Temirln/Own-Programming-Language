@@ -4,6 +4,7 @@ import splat.executor.MIPSCode;
 import splat.executor.StackFrameInfo;
 import splat.lexer.Token;
 import splat.parser.elements.DECL.FunctionDecl;
+import splat.parser.elements.DECL.VariableDecl;
 import splat.parser.elements.EXPR.LabelExpr;
 import splat.parser.elements.Expression;
 import splat.parser.elements.Statement;
@@ -47,10 +48,11 @@ public class PrintStmt extends Statement {
 
         if (expr instanceof LabelExpr){
             regnum = frameInfo.getRegisterNum(((LabelExpr) expr).getLabel());
+
         }
 
         getExpr().computeAndStore(mipsCode,frameInfo, 0);
-        mipsCode.append("syscall\n");
+        mipsCode.append("   syscall\n");
         mipsCode.append("########################## PRINTSTMT ##########################\n");
     }
 }

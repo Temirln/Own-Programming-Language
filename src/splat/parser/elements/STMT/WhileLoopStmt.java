@@ -64,22 +64,20 @@ public class WhileLoopStmt extends Statement {
 
         String while_label = LabelGenerator.getNewWhileLabel();
 
-        mipsCode.append("li $v0,4\n");
-        mipsCode.append("la $a3,true_string\n");
+        mipsCode.append("   li $v0,4\n");
+        mipsCode.append("   la $a3,true_string\n");
 
         mipsCode.append(while_label+":\n");
         getExpr().computeAndStore(mipsCode,frameInfo,0);
-        mipsCode.append("li $v0,4\n");
-        mipsCode.append("la $a1,true_string\n");
-        mipsCode.append("bne $a0,$a1,exit_"+while_label+"\n");
-
-//        mipsCode.append("beq $a3,$a0,exit_"+while_label+"\n");
+        mipsCode.append("   li $v0,4\n");
+        mipsCode.append("   la $a1,true_string\n");
+        mipsCode.append("   bne $a0,$a1,exit_"+while_label+"\n");
 
         for(Statement stmt : getStmts()){
             stmt.convertToMIPS(mipsCode,frameInfo);
         }
-        mipsCode.append("j "+while_label+"\n");
-        mipsCode.append("exit_"+while_label+":\n");
+        mipsCode.append("   j "+while_label+"\n");
+        mipsCode.append("   exit_"+while_label+":\n");
         mipsCode.append("########################## WHILESTMT ##########################\n");
 
     }

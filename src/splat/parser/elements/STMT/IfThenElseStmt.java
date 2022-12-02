@@ -94,9 +94,9 @@ public class IfThenElseStmt extends Statement {
         String if_label = LabelGenerator.getNewIfLabel();
 
         getExpr().computeAndStore(mipsCode,frameInfo, 0);
-        mipsCode.append("li $v0,4\n");
-        mipsCode.append("la $a1,true_string\n");
-        mipsCode.append("beq $a0,$a1,"+if_label+"\n");
+        mipsCode.append("   li $v0,4\n");
+        mipsCode.append("   la $a1,true_string\n");
+        mipsCode.append("   beq $a0,$a1,"+if_label+"\n");
 
         if (getStmts2().size() > 0){
             for(Statement stmt : getStmts2()){
@@ -104,13 +104,14 @@ public class IfThenElseStmt extends Statement {
             }
         }
 
-        mipsCode.append("j next_"+if_label+"\n");
+        mipsCode.append("   j next_"+if_label+"\n");
 
-        mipsCode.append(if_label+":\n");
+        mipsCode.append("   "+if_label+":\n");
         for (Statement stmt : getStmts1()){
             stmt.convertToMIPS(mipsCode,frameInfo);
         }
-        mipsCode.append("next_"+if_label+":\n\n");
+
+        mipsCode.append("   next_"+if_label+":\n\n");
 
         mipsCode.append("########################## IFELSETHENTSTMT ##########################\n");
 

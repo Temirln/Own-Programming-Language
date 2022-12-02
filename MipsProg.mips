@@ -3,252 +3,144 @@
 new_line_string: .asciiz "\n"
 false_string: .asciiz "false"
 true_string: .asciiz "true"
-string_lit_label_1: .asciiz " on the wall"
-string_lit_label_2: .asciiz " bottles of kvass"
-string_lit_label_3: .asciiz "If one of them should happen to fall..."
+string_lit_label_17: .asciiz "*"
 .text
 ############ main program ############
 main: move $fp $sp
-########################## FUNCTIONCALLSTMT ##########################
+########################## ASSIGNVARIABLESTMT ##########################
 ################ INTLITERALEXPR ################
-li $v0,1
-li $s0,1
-li $a0,2
+   li $v0,1
+   li $s0,1
+   li $a0,0
 ################ INTLITERALEXPR ################
-addi $sp, $sp, -12
-sw $ra, 8($sp)
-jal kvass
-kvass_return:
-lw $ra, 8($sp)
-addi $sp, $sp, 12
-########################## FUNCTIONCALLSTMT ##########################
+   move $s0,$v0
+   move $t0,$a0
+
+########################## ASSIGNVARIABLESTMT ##########################
+########################## ASSIGNVARIABLESTMT ##########################
+################ INTLITERALEXPR ################
+   li $v0,1
+   li $s0,1
+   li $a0,5
+################ INTLITERALEXPR ################
+   move $s2,$v0
+   move $t2,$a0
+
+########################## ASSIGNVARIABLESTMT ##########################
+########################## WHILESTMT ##########################
+   li $v0,4
+   la $a3,true_string
+while_label_8:
+################ BINARYOPEXPR ################
+################ LABELEXPR ################
+   addi $a0,$t0,0
+   move $v0,$s0
+################ LABELEXPR ################
+################ LABELEXPR ################
+   addi $a1,$t2,0
+   move $v0,$s2
+################ LABELEXPR ################
+   blt $a0,$a1,general_label_78
+      li $v0,4
+      la $a0,false_string
+      j next_general_label_78
+   general_label_78:
+      li $v0,4
+      la $a0,true_string
+   next_general_label_78:
+################ BINARYOPEXPR ################
+   li $v0,4
+   la $a1,true_string
+   bne $a0,$a1,exit_while_label_8
+########################## ASSIGNVARIABLESTMT ##########################
+################ INTLITERALEXPR ################
+   li $v0,1
+   li $s0,1
+   li $a0,0
+################ INTLITERALEXPR ################
+   move $s1,$v0
+   move $t1,$a0
+
+########################## ASSIGNVARIABLESTMT ##########################
+########################## WHILESTMT ##########################
+   li $v0,4
+   la $a3,true_string
+while_label_9:
+################ BINARYOPEXPR ################
+################ LABELEXPR ################
+   addi $a0,$t1,0
+   move $v0,$s1
+################ LABELEXPR ################
+################ LABELEXPR ################
+   addi $a1,$t0,0
+   move $v0,$s0
+################ LABELEXPR ################
+   ble $a0,$a1,general_label_79
+      li $v0,4
+      la $a0,false_string
+      j next_general_label_79
+   general_label_79:
+      li $v0,4
+      la $a0,true_string
+   next_general_label_79:
+################ BINARYOPEXPR ################
+   li $v0,4
+   la $a1,true_string
+   bne $a0,$a1,exit_while_label_9
+########################## PRINTSTMT ##########################
+################ STRINGLITERAL ################
+   li $v0,4
+   la $a0,string_lit_label_17
+################ STRINGLITERAL ################
+   syscall
+########################## PRINTSTMT ##########################
+########################## ASSIGNVARIABLESTMT ##########################
+################ BINARYOPEXPR ################
+################ LABELEXPR ################
+   addi $a0,$t1,0
+   move $v0,$s1
+################ LABELEXPR ################
+################ INTLITERALEXPR ################
+   li $v0,1
+   li $s1,1
+   li $a1,1
+################ INTLITERALEXPR ################
+   add $a0,$a0,$a1
+################ BINARYOPEXPR ################
+   move $s1,$v0
+   move $t1,$a0
+
+########################## ASSIGNVARIABLESTMT ##########################
+   j while_label_9
+   exit_while_label_9:
+########################## WHILESTMT ##########################
+########################## ASSIGNVARIABLESTMT ##########################
+################ BINARYOPEXPR ################
+################ LABELEXPR ################
+   addi $a0,$t0,0
+   move $v0,$s0
+################ LABELEXPR ################
+################ INTLITERALEXPR ################
+   li $v0,1
+   li $s1,1
+   li $a1,1
+################ INTLITERALEXPR ################
+   add $a0,$a0,$a1
+################ BINARYOPEXPR ################
+   move $s0,$v0
+   move $t0,$a0
+
+########################## ASSIGNVARIABLESTMT ##########################
+########################## PRINTLINESTMT ##########################
+   li $v0,4
+   la $a0, new_line_string
+   syscall
+########################## PRINTLINESTMT ##########################
+   j while_label_8
+   exit_while_label_8:
+########################## WHILESTMT ##########################
 li $v0 10
 syscall  #terminating program normally
 fail_and_exit: li $a0 -1
 li $v0 17
 syscall  #terminating program with error
-############################### FUNCTIONDECL ################################
-output: nop
-move $t0,$a0
-########################## FUNCTIONCALLSTMT ##########################
-################ LABELEXPR ################
-addi $a0,$t0,0
-move $v0,$s0
-################ LABELEXPR ################
-addi $sp, $sp, -12
-sw $t0, 8($sp)
-addi $sp, $sp, -12
-sw $ra, 8($sp)
-jal output2pre
-lw $t0, 8($sp)
-addi $sp, $sp, 12
-lw $ra, 8($sp)
-addi $sp, $sp, 12
-########################## FUNCTIONCALLSTMT ##########################
-########################## PRINTSTMT ##########################
-################ STRINGLITERAL ################
-li $v0,4
-la $a0,string_lit_label_1
-################ STRINGLITERAL ################
-syscall
-########################## PRINTSTMT ##########################
-########################## PRINTLINESTMT ##########################
-li $v0,4
-la $a0, new_line_string
-syscall
-########################## PRINTLINESTMT ##########################
-output_end: jr $ra
-############################### FUNCTIONDECL ################################
-############################### FUNCTIONDECL ################################
-output2: nop
-move $t0,$a0
-########################## FUNCTIONCALLSTMT ##########################
-################ LABELEXPR ################
-addi $a0,$t0,0
-move $v0,$s0
-################ LABELEXPR ################
-addi $sp, $sp, -12
-sw $t0, 8($sp)
-addi $sp, $sp, -12
-sw $ra, 8($sp)
-jal output2pre
-lw $t0, 8($sp)
-addi $sp, $sp, 12
-lw $ra, 8($sp)
-addi $sp, $sp, 12
-########################## FUNCTIONCALLSTMT ##########################
-########################## PRINTLINESTMT ##########################
-li $v0,4
-la $a0, new_line_string
-syscall
-########################## PRINTLINESTMT ##########################
-output2_end: jr $ra
-############################### FUNCTIONDECL ################################
-############################### FUNCTIONDECL ################################
-output2pre: nop
-move $t0,$a0
-########################## PRINTSTMT ##########################
-################ LABELEXPR ################
-addi $a0,$t0,0
-move $v0,$s0
-################ LABELEXPR ################
-syscall
-########################## PRINTSTMT ##########################
-########################## PRINTSTMT ##########################
-################ STRINGLITERAL ################
-li $v0,4
-la $a0,string_lit_label_2
-################ STRINGLITERAL ################
-syscall
-########################## PRINTSTMT ##########################
-output2pre_end: jr $ra
-############################### FUNCTIONDECL ################################
-############################### FUNCTIONDECL ################################
-falling: nop
-########################## PRINTSTMT ##########################
-################ STRINGLITERAL ################
-li $v0,4
-la $a0,string_lit_label_3
-################ STRINGLITERAL ################
-syscall
-########################## PRINTSTMT ##########################
-########################## PRINTLINESTMT ##########################
-li $v0,4
-la $a0, new_line_string
-syscall
-########################## PRINTLINESTMT ##########################
-falling_end: jr $ra
-############################### FUNCTIONDECL ################################
-############################### FUNCTIONDECL ################################
-kvass: nop
-move $t0,$a0
-########################## IFELSETHENSTMT ##########################
-################ BINARYOPEXPR ################
-################ LABELEXPR ################
-addi $a0,$t0,0
-move $v0,$s0
-################ LABELEXPR ################
-################ INTLITERALEXPR ################
-li $v0,1
-li $s1,1
-li $a1,0
-################ INTLITERALEXPR ################
-bgt $a0,$a1,general_label_1
-li $v0,4
-la $a0,false_string
-j next_general_label_1
-general_label_1:
-li $v0,4
-la $a0,true_string
-next_general_label_1:
-################ BINARYOPEXPR ################
-li $v0,4
-la $a1,true_string
-beq $a0,$a1,if_label_1
-j next_if_label_1
-if_label_1:
-########################## FUNCTIONCALLSTMT ##########################
-################ LABELEXPR ################
-addi $a0,$t0,0
-move $v0,$s0
-################ LABELEXPR ################
-addi $sp, $sp, -12
-sw $t0, 8($sp)
-addi $sp, $sp, -12
-sw $ra, 8($sp)
-jal verse
-lw $t0, 8($sp)
-addi $sp, $sp, 12
-lw $ra, 8($sp)
-addi $sp, $sp, 12
-########################## FUNCTIONCALLSTMT ##########################
-########################## FUNCTIONCALLSTMT ##########################
-################ BINARYOPEXPR ################
-################ LABELEXPR ################
-addi $a0,$t0,0
-move $v0,$s0
-################ LABELEXPR ################
-################ INTLITERALEXPR ################
-li $v0,1
-li $s1,1
-li $a1,1
-################ INTLITERALEXPR ################
-sub $a0,$a0,$a1
-################ BINARYOPEXPR ################
-addi $sp, $sp, -12
-sw $ra, 8($sp)
-jal kvass
-lw $ra, 8($sp)
-addi $sp, $sp, 12
-########################## FUNCTIONCALLSTMT ##########################
-next_if_label_1:
-
-########################## IFELSETHENTSTMT ##########################
-kvass_end: jr $ra
-############################### FUNCTIONDECL ################################
-############################### FUNCTIONDECL ################################
-verse: nop
-move $t0,$a0
-########################## FUNCTIONCALLSTMT ##########################
-################ LABELEXPR ################
-addi $a0,$t0,0
-move $v0,$s0
-################ LABELEXPR ################
-addi $sp, $sp, -12
-sw $t0, 8($sp)
-addi $sp, $sp, -12
-sw $ra, 8($sp)
-jal output
-lw $t0, 8($sp)
-addi $sp, $sp, 12
-lw $ra, 8($sp)
-addi $sp, $sp, 12
-########################## FUNCTIONCALLSTMT ##########################
-########################## FUNCTIONCALLSTMT ##########################
-################ LABELEXPR ################
-addi $a0,$t0,0
-move $v0,$s0
-################ LABELEXPR ################
-addi $sp, $sp, -12
-sw $t0, 8($sp)
-addi $sp, $sp, -12
-sw $ra, 8($sp)
-jal output2
-lw $t0, 8($sp)
-addi $sp, $sp, 12
-lw $ra, 8($sp)
-addi $sp, $sp, 12
-########################## FUNCTIONCALLSTMT ##########################
-########################## FUNCTIONCALLSTMT ##########################
-addi $sp, $sp, -12
-sw $ra, 8($sp)
-jal falling
-lw $ra, 8($sp)
-addi $sp, $sp, 12
-########################## FUNCTIONCALLSTMT ##########################
-########################## FUNCTIONCALLSTMT ##########################
-################ BINARYOPEXPR ################
-################ LABELEXPR ################
-addi $a0,$t0,0
-move $v0,$s0
-################ LABELEXPR ################
-################ INTLITERALEXPR ################
-li $v0,1
-li $s1,1
-li $a1,1
-################ INTLITERALEXPR ################
-sub $a0,$a0,$a1
-################ BINARYOPEXPR ################
-addi $sp, $sp, -12
-sw $ra, 8($sp)
-jal output
-lw $ra, 8($sp)
-addi $sp, $sp, 12
-########################## FUNCTIONCALLSTMT ##########################
-########################## PRINTLINESTMT ##########################
-li $v0,4
-la $a0, new_line_string
-syscall
-########################## PRINTLINESTMT ##########################
-verse_end: jr $ra
-############################### FUNCTIONDECL ################################

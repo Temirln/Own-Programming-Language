@@ -78,24 +78,19 @@ public class UnaryOpExpr extends Expression {
         getExpr().computeAndStore(mipsCode,frameInfo,0);
         String unaryOp = getUnaryOp();
         String general_label = LabelGenerator.getNewGeneralLabel();
-        switch (unaryOp){
-            case "not":
-                mipsCode.append("li $v0,4\n");
-                mipsCode.append("la $a1,true_string\n");
-                mipsCode.append("li $v0,4\n");
-                mipsCode.append("la $a2,false_string\n");
-
-                mipsCode.append("beq $a0,$a1,swap_"+general_label+"\n");
-                mipsCode.append("move $a0,$a1\n");
-                mipsCode.append("j next_"+general_label+"\n");
-                mipsCode.append("swap_"+general_label+":\n");
-                mipsCode.append("move $a0,$a2\n");
-                mipsCode.append("next_"+general_label+":\n");
-                break;
-            case "-":
-                mipsCode.append("sub $a0,$zero,$a0\n");
-                break;
-
+        switch (unaryOp) {
+            case "not" -> {
+                mipsCode.append("   li $v0,4\n");
+                mipsCode.append("   la $a3,true_string\n");
+                mipsCode.append("   beq $a" + regnum + ",$a3,swap_" + general_label + "\n");
+                mipsCode.append("   la $a0,true_string\n");
+                mipsCode.append("   j next_" + general_label + "\n");
+                mipsCode.append("   swap_" + general_label + ":\n");
+                mipsCode.append("   li $v0,4\n");
+                mipsCode.append("   la $a0,false_string\n");
+                mipsCode.append("   next_" + general_label + ":\n");
+            }
+            case "-" -> mipsCode.append("   sub $a0,$zero,$a0\n");
         }
         mipsCode.append("################ UNARYOP ################\n");
     }

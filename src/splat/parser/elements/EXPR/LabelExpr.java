@@ -47,16 +47,8 @@ public class LabelExpr extends Expression {
     public void computeAndStore(MIPSCode mipsCode, StackFrameInfo frameInfo, int regnum) {
         mipsCode.append("################ LABELEXPR ################\n");
         int reg = frameInfo.getRegisterNum(getLabel());
-//        mipsCode.append("li $v0,1\n");
-//        mipsCode.append("addi $a"+regnum+",$zero,0\n");
-//        mipsCode.append("move $t"+regnum+",$a0\n");
-
-        mipsCode.append("addi $a"+regnum+",$t"+reg+",0\n");
-        mipsCode.append("move $v0,$s"+reg+"\n");
-//        mipsCode.append("li $v0,9\n");
-//mipsCode.append("move $v0,$k0\n");
-//        mipsCode.append("addi $t"+reg+",$t"+reg+",0\n");
-//        mipsCode.append("$a0 = $t"+reg+"\n");
+        mipsCode.append("   addi $a"+regnum+",$t"+reg+",0\n");
+        mipsCode.append("   move $v0,$s"+reg+"\n");
         mipsCode.append("################ LABELEXPR ################\n");
     }
 }

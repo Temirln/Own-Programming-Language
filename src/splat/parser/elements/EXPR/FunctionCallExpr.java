@@ -5,6 +5,7 @@ import splat.executor.StackFrameInfo;
 import splat.lexer.Token;
 import splat.parser.elements.DECL.FunctionDecl;
 import splat.parser.elements.Expression;
+import splat.parser.elements.Param;
 import splat.parser.elements.Type;
 import splat.semanticanalyzer.SemanticAnalysisException;
 
@@ -78,17 +79,65 @@ public class FunctionCallExpr extends Expression {
     public void computeAndStore(MIPSCode mipsCode, StackFrameInfo frameInfo, int regnum) {
         mipsCode.append("################ FUNCTIONCALLEXPR ################\n");
 
+
+
+        //Store Values to Stack
+//        if (getArgs().size()>0){
+//            mipsCode.append("addi $sp, $sp, -"+(frameInfo.numberOfVars()*4)+"\n");
+//            for (int i =0; i<frameInfo.numberOfVars();i++){
+//                mipsCode.append("sw $t"+i+","+(i*4)+"($sp)\n");
+//            }
+//        }
+
+
+
+
+
         int regcount = 0;
         for(Expression expr : getArgs()){
             expr.computeAndStore(mipsCode,frameInfo,regcount);
             regcount++;
         }
 
+
+
+
+
         String label = getLabel();
-        mipsCode.append("jal "+label+"\n");
+
+//        mipsCode.append("   addi $sp, $sp, -12\n");
+//        mipsCode.append("   sw $ra, 8($sp)\n");
+        mipsCode.append("   jal "+label+"\n");
+
+//        mipsCode.append("   addi $a0,$v1,0\n");
 
 
-        mipsCode.append("addi $a0,$v1,0\n");
+//        mipsCode.append("   lw $ra, 8($sp)\n");
+//        mipsCode.append("   addi $sp, $sp, 12\n");
+
+
+        mipsCode.append("   addi $a"+regnum+",$v1,0\n");
+//
+//        mipsCode.append("addi $sp,$sp -4\n");
+//        mipsCode.append("sw $a"+regnum+",0($sp)\n");
+
+
+
+        //Load Values from the stack
+//        if (getArgs().size()>0){
+//
+//            for (int i =0; i<frameInfo.numberOfVars();i++){
+//                mipsCode.append("lw $t"+i+","+(i*4)+"($sp)\n");
+//            }
+//            mipsCode.append("addi $sp, $sp, "+(frameInfo.numberOfVars()*4)+"\n");
+//        }
+
+
+
+//        mipsCode.append("lw $a"+regnum+",0($sp)\n");
+//        mipsCode.append("addi $sp,$sp 4\n");
+
+
         mipsCode.append("################ FUNCTIONCALLEXPR ################\n");
     }
 }

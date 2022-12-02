@@ -56,9 +56,17 @@ public class ReturnExStmt extends Statement {
 
         getExpr().computeAndStore(mipsCode,frameInfo,0);
 
-        mipsCode.append("addi $v1,$a0,0\n");
+        String func_name = frameInfo.getFunctionName();
+
+        mipsCode.append("   addi $v1,$a0,0\n");
 //        mipsCode.append("jal "+frameInfo.getFunctionName()+"_end\n");
-        mipsCode.append("jr $ra\n");
+        mipsCode.append("   jr $ra\n");
+//        mipsCode.append("   addi $sp, $sp, -12\n");
+//        mipsCode.append("   sw $ra, 8($sp)\n");
+
+//        mipsCode.append("   jal "+func_name+"_end\n");
+//        mipsCode.append("   lw $ra, 8($sp)\n");
+//        mipsCode.append("   addi $sp, $sp, 12\n");
         mipsCode.append("########################## RETURNEXSTMT ##########################\n");
     }
 }

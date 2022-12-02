@@ -72,16 +72,21 @@ public class FunctionDecl extends Declaration {
 		mipsCode.append(getLabel() + ": nop\n");
 
 		for(VariableDecl locVar : getLocalVarDecls()){
-			mipsCode.append("addi $t"+frameInfo.getRegisterNum(locVar.getLabel())+",$zero,0\n");
+			mipsCode.append("	addi $t"+frameInfo.getRegisterNum(locVar.getLabel())+",$zero,0\n");
 		}
 
+		// Store Values to the stack
+		int count = getParams().size();
+		mipsCode.append("   addi $sp, $sp,-"+(count*4)+"\n");
 		for (Param param : getParams()){
-//			mipsCode.append("$sp,$sp,-4");
-//			mipsCode.append("sw $s");
-//			mipsCode.append("move $v0"+"$s"+frameInfo.);
+			mipsCode.append("   sw $t"+frameInfo.getRegisterNum(param.getLabel())+", "+((count-1)*4)+"($sp)\n");
+			count--;
+		}
 
 
-			mipsCode.append("move $t"+frameInfo.getRegisterNum(param.getLabel())+",$a"+frameInfo.getRegisterNum(param.getLabel())+"\n");
+
+		for (Param param : getParams()){
+			mipsCode.append("   move $t"+frameInfo.getRegisterNum(param.getLabel())+",$a"+frameInfo.getRegisterNum(param.getLabel())+"\n");
 		}
 
 
@@ -89,8 +94,21 @@ public class FunctionDecl extends Declaration {
 			stmt.convertToMIPS(mipsCode,frameInfo);
 		}
 
-		mipsCode.append(getLabel() + "_end: jr $ra\n");
-//		mipsCode.append("\n");
+		mipsCode.append(getLabel() +"_end: \n");
+
+
+		//Load Values from the stack
+		count = getParams().size();
+		for (Param param : getParams()){
+			mipsCode.append("   lw $t"+frameInfo.getRegisterNum(param.getLabel())+","+((count-1)*4)+"($sp)\n");
+			count--;
+		}
+
+		mipsCode.append("   addi $sp, $sp,"+(getParams().size()*4)+"\n");
+
+		mipsCode.append("   addi $v0,$a0,0\n");
+
+		mipsCode.append("   jr $ra\n");
 		mipsCode.append("############################### FUNCTIONDECL ################################\n");
 	}
 

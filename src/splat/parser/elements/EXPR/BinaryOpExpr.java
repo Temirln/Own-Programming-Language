@@ -110,89 +110,93 @@ public class BinaryOpExpr extends Expression {
         switch (binop) {
             case "+" -> {
 
-                mipsCode.append("add $a" + regnum + ",$a" + regnum + ",$a" + (regnum + 1) + "\n");
+                mipsCode.append("   add $a" + regnum + ",$a" + regnum + ",$a" + (regnum + 1) + "\n");
+
             }
 
-            case "-" -> mipsCode.append("sub $a" + regnum + ",$a" + regnum + ",$a" + (regnum + 1) + "\n");
-            case "/" -> mipsCode.append("div $a" + regnum + ",$a" + regnum + ",$a" + (regnum + 1) + "\n");
-            case "*" -> mipsCode.append("mul $a" + regnum + ",$a" + regnum + ",$a" + (regnum + 1) + "\n");
+            case "-" -> mipsCode.append("   sub $a" + regnum + ",$a" + regnum + ",$a" + (regnum + 1) + "\n");
+            case "/" -> {
+                mipsCode.append("   beq $a"+(regnum+1)+",$zero,fail_and_exit\n");
+                mipsCode.append("   div $a" + regnum + ",$a" + regnum + ",$a" + (regnum + 1) + "\n");
+            }
+            case "*" -> mipsCode.append("   mul $a" + regnum + ",$a" + regnum + ",$a" + (regnum + 1) + "\n");
             case "%" -> {
-                mipsCode.append("div $a" + regnum + ",$a" + (regnum + 1) + "\n");
-                mipsCode.append("mfhi $a0\n");
+                mipsCode.append("   div $a" + regnum + ",$a" + (regnum + 1) + "\n");
+                mipsCode.append("   mfhi $a0\n");
             }
             case "and" -> {
-                mipsCode.append("li $v0,4\n");
-                mipsCode.append("la $a3,true_string\n");
-                mipsCode.append("beq $a" + regnum + ",$a3," + label + "\n");
-                mipsCode.append("la $a0,false_string\n");
+                mipsCode.append("   li $v0,4\n");
+                mipsCode.append("   la $a3,true_string\n");
+                mipsCode.append("   beq $a" + regnum + ",$a3," + label + "\n");
+                mipsCode.append("      la $a0,false_string\n");
                 mipsCode.append(label + ":\n");
-                mipsCode.append("next_" + label + ":\n");
+                mipsCode.append("   next_" + label + ":\n");
                 String new_label = LabelGenerator.getNewGeneralLabel();
-                mipsCode.append("beq $a" + (regnum + 1) + ",$a3," + new_label + "\n");
-                mipsCode.append("la $a0,false_string\n");
-                mipsCode.append(new_label + ":\n");
-                mipsCode.append("next_" + new_label + ":\n");
+                mipsCode.append("   beq $a" + (regnum + 1) + ",$a3," + new_label + "\n");
+                mipsCode.append("      la $a0,false_string\n");
+                mipsCode.append("   "+new_label + ":\n");
+                mipsCode.append("   next_" + new_label + ":\n");
             }
             case "or" -> {
-                mipsCode.append("li $v0,4\n");
-                mipsCode.append("la $a3,true_string\n");
-                mipsCode.append("beq $a" + regnum + ",$a3," + label + "\n");
-                mipsCode.append("beq $a" + (regnum + 1) + ",$a3," + label + "\n");
-                mipsCode.append("la $a0,false_string\n");
-                mipsCode.append("j next_" + label + "\n");
-                mipsCode.append(label + ":\n");
-                mipsCode.append("la $a0,true_string\n");
-                mipsCode.append("next_" + label + ":\n");
+                mipsCode.append("   li $v0,4\n");
+                mipsCode.append("   la $a3,true_string\n");
+                mipsCode.append("   beq $a" + regnum + ",$a3," + label + "\n");
+                mipsCode.append("   beq $a" + (regnum + 1) + ",$a3," + label + "\n");
+                mipsCode.append("      la $a0,false_string\n");
+                mipsCode.append("      j next_" + label + "\n");
+                mipsCode.append("   "+label + ":\n");
+                mipsCode.append("      la $a0,true_string\n");
+                mipsCode.append("   next_" + label + ":\n");
             }
             case "==" -> {
-                mipsCode.append("beq $a" + regnum + ",$a" + (regnum + 1) + "," + label + "\n");
-                mipsCode.append("li $v0,4\n");
-                mipsCode.append("la $a" + regnum + ",false_string\n");
-                mipsCode.append("j next_" + label + "\n");
-                mipsCode.append(label + ":\n");
-                mipsCode.append("li $v0,4\n");
-                mipsCode.append("la $a" + regnum + ",true_string\n");
-                mipsCode.append("next_" + label + ":\n");
+                mipsCode.append("   beq $a" + regnum + ",$a" + (regnum + 1) + "," + label + "\n");
+                mipsCode.append("      li $v0,4\n");
+                mipsCode.append("      la $a" + regnum + ",false_string\n");
+                mipsCode.append("      j next_" + label + "\n");
+                mipsCode.append("   "+label + ":\n");
+                mipsCode.append("      li $v0,4\n");
+                mipsCode.append("      la $a" + regnum + ",true_string\n");
+                mipsCode.append("   next_" + label + ":\n");
             }
             case ">=" -> {
-                mipsCode.append("bge $a" + regnum + ",$a" + (regnum + 1) + "," + label + "\n");
-                mipsCode.append("li $v0,4\n");
-                mipsCode.append("la $a" + regnum + ",false_string\n");
-                mipsCode.append("j next_" + label + "\n");
-                mipsCode.append(label + ":\n");
-                mipsCode.append("li $v0,4\n");
-                mipsCode.append("la $a" + regnum + ",true_string\n");
-                mipsCode.append("next_" + label + ":\n");
+                mipsCode.append("   bge $a" + regnum + ",$a" + (regnum + 1) + "," + label + "\n");
+                mipsCode.append("      li $v0,4\n");
+                mipsCode.append("      la $a" + regnum + ",false_string\n");
+                mipsCode.append("      j next_" + label + "\n");
+                mipsCode.append("   "+label + ":\n");
+                mipsCode.append("      li $v0,4\n");
+                mipsCode.append("      la $a" + regnum + ",true_string\n");
+                mipsCode.append("   next_" + label + ":\n");
             }
             case "<=" -> {
-                mipsCode.append("ble $a" + regnum + ",$a" + (regnum + 1) + "," + label + "\n");
-                mipsCode.append("li $v0,4\n");
-                mipsCode.append("la $a" + regnum + ",false_string\n");
-                mipsCode.append("j next_" + label + "\n");
-                mipsCode.append(label + ":\n");
-                mipsCode.append("li $v0,4\n");
-                mipsCode.append("la $a" + regnum + ",true_string\n");
-                mipsCode.append("next_" + label + ":\n");
+                mipsCode.append("   ble $a" + regnum + ",$a" + (regnum + 1) + "," + label + "\n");
+                mipsCode.append("      li $v0,4\n");
+                mipsCode.append("      la $a" + regnum + ",false_string\n");
+                mipsCode.append("      j next_" + label + "\n");
+                mipsCode.append("   "+label + ":\n");
+                mipsCode.append("      li $v0,4\n");
+                mipsCode.append("      la $a" + regnum + ",true_string\n");
+                mipsCode.append("   next_" + label + ":\n");
             }
             case ">" -> {
-                mipsCode.append("bgt $a" + regnum + ",$a" + (regnum + 1) + "," + label + "\n");
-                mipsCode.append("li $v0,4\n");
-                mipsCode.append("la $a" + regnum + ",false_string\n");
-                mipsCode.append("j next_" + label + "\n");
-                mipsCode.append(label + ":\n");
-                mipsCode.append("li $v0,4\n");
-                mipsCode.append("la $a" + regnum + ",true_string\n");
-                mipsCode.append("next_" + label + ":\n");
+                mipsCode.append("   bgt $a" + regnum + ",$a" + (regnum + 1) + "," + label + "\n");
+                mipsCode.append("      li $v0,4\n");
+                mipsCode.append("      la $a" + regnum + ",false_string\n");
+                mipsCode.append("      j next_" + label + "\n");
+                mipsCode.append("   "+label + ":\n");
+                mipsCode.append("      li $v0,4\n");
+                mipsCode.append("      la $a" + regnum + ",true_string\n");
+                mipsCode.append("   next_" + label + ":\n");
             }
             case "<" -> {
-                mipsCode.append("blt $a" + regnum + ",$a" + (regnum + 1) + "," + label + "\n");
-                mipsCode.append("li $v0,4\n");
-                mipsCode.append("la $a" + regnum + ",false_string\n");
-                mipsCode.append("j next_" + label + "\n");
-                mipsCode.append(label + ":\n");
-                mipsCode.append("li $v0,4\n");
-                mipsCode.append("la $a" + regnum + ",true_string\n");
-                mipsCode.append("next_" + label + ":\n");
+                mipsCode.append("   blt $a" + regnum + ",$a" + (regnum + 1) + "," + label + "\n");
+                mipsCode.append("      li $v0,4\n");
+                mipsCode.append("      la $a" + regnum + ",false_string\n");
+                mipsCode.append("      j next_" + label + "\n");
+                mipsCode.append("   "+label + ":\n");
+                mipsCode.append("      li $v0,4\n");
+                mipsCode.append("      la $a" + regnum + ",true_string\n");
+                mipsCode.append("   next_" + label + ":\n");
             }
         }
         mipsCode.append("################ BINARYOPEXPR ################\n");

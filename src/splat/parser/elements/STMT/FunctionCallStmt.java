@@ -83,21 +83,20 @@ public class FunctionCallStmt extends Statement {
 
 
 
-        mipsCode.append("addi $sp, $sp, -12\n");
-        mipsCode.append("sw $ra, 8($sp)\n");
-        mipsCode.append("jal "+label+"\n");
+
+        mipsCode.append("   addi $sp, $sp, -12\n");
+        mipsCode.append("   sw $ra, 8($sp)\n");
 
 
+
+        mipsCode.append("   jal "+label+"\n");
 
         if (frameInfo.getFunctionName().equals("main")){
             mipsCode.append(label+"_return:\n");
         }
-        mipsCode.append("lw $ra, 8($sp)\n");
-        mipsCode.append("addi $sp, $sp, 12\n");
+        mipsCode.append("   lw $ra, 8($sp)\n");
+        mipsCode.append("   addi $sp, $sp, 12\n");
 
-
-
-//        mipsCode.append("syscall\n");
         mipsCode.append("########################## FUNCTIONCALLSTMT ##########################\n");
     }
 }

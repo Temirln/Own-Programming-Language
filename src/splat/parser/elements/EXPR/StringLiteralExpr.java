@@ -47,12 +47,12 @@ public class StringLiteralExpr extends Expression {
     public void computeAndStore(MIPSCode mipsCode, StackFrameInfo frameInfo, int regnum) {
 //        mipsCode.append("li $s"+regnum+",4\n");
         mipsCode.append("################ STRINGLITERAL ################\n");
-        mipsCode.append("li $v0,4\n");
+        mipsCode.append("   li $v0,4\n");
 
         String label =LabelGenerator.getNewStringLabel();
 //        System.out.println(label);
         mipsCode.addNewStringLiteral(label,getString_literal());
-        mipsCode.append("la $a0,"+label+"\n");
+        mipsCode.append("   la $a0,"+label+"\n");
         mipsCode.append("################ STRINGLITERAL ################\n");
     }
 }

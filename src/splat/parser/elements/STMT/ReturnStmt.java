@@ -4,6 +4,7 @@ import splat.executor.MIPSCode;
 import splat.executor.StackFrameInfo;
 import splat.lexer.Token;
 import splat.parser.elements.DECL.FunctionDecl;
+import splat.parser.elements.Param;
 import splat.parser.elements.Statement;
 import splat.parser.elements.Type;
 import splat.semanticanalyzer.SemanticAnalysisException;
@@ -32,10 +33,11 @@ public class ReturnStmt extends Statement {
     public void convertToMIPS(MIPSCode mipsCode, StackFrameInfo frameInfo) {
         mipsCode.append("########################## RETURNSTMT ##########################\n");
         String func_name = frameInfo.getFunctionName();
+
 //        System.out.println(func_name);
 //        mipsCode.append("jal "+func_name+"_end\n");
-        mipsCode.append("addi $v1,$a0,0\n");
-        mipsCode.append("jal "+func_name+"_return\n");
+        mipsCode.append("   addi $v1,$a0,0\n");
+        mipsCode.append("   jal "+func_name+"_return\n");
         mipsCode.append("########################## RETURNSTMT ##########################\n");
     }
 

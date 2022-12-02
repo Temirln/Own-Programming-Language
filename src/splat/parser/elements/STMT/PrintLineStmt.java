@@ -24,9 +24,9 @@ public class PrintLineStmt extends Statement {
     @Override
     public void convertToMIPS(MIPSCode mipsCode, StackFrameInfo frameInfo) {
         mipsCode.append("########################## PRINTLINESTMT ##########################\n");
-        mipsCode.append("li $v0,4\n");
-        mipsCode.append("la $a0, new_line_string\n");
-        mipsCode.append("syscall\n");
+        mipsCode.append("   li $v0,4\n");
+        mipsCode.append("   la $a0, new_line_string\n");
+        mipsCode.append("   syscall\n");
         mipsCode.append("########################## PRINTLINESTMT ##########################\n");
     }
 
