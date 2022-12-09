@@ -3,8 +3,8 @@ package splat.executor;
 import splat.Splat;
 import splat.SplatException;
 import splat.parser.elements.*;
-import splat.parser.elements.DECL.FunctionDecl;
-import splat.parser.elements.DECL.VariableDecl;
+import splat.parser.elements.FunctionDecl;
+import splat.parser.elements.VariableDecl;
 
 import java.io.*;
 import java.util.ArrayList;

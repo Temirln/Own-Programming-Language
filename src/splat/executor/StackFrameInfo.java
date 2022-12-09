@@ -1,8 +1,8 @@
 package splat.executor;
 
-import splat.parser.elements.DECL.FunctionDecl;
+import splat.parser.elements.FunctionDecl;
 import splat.parser.elements.Param;
-import splat.parser.elements.DECL.VariableDecl;
+import splat.parser.elements.VariableDecl;
 
 import java.util.ArrayList;
 import java.util.List;

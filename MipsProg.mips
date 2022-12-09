@@ -3,7 +3,9 @@
 new_line_string: .asciiz "\n"
 false_string: .asciiz "false"
 true_string: .asciiz "true"
-string_lit_label_17: .asciiz "*"
+string_lit_label_1: .asciiz "printing numbers from 0 to 6 whose factorial is less than "
+string_lit_label_2: .asciiz " number:"
+string_lit_label_3: .asciiz "NO!"
 .text
 ############ main program ############
 main: move $fp $sp
@@ -11,109 +13,133 @@ main: move $fp $sp
 ################ INTLITERALEXPR ################
    li $v0,1
    li $s0,1
-   li $a0,0
-################ INTLITERALEXPR ################
-   move $s0,$v0
-   move $t0,$a0
-
-########################## ASSIGNVARIABLESTMT ##########################
-########################## ASSIGNVARIABLESTMT ##########################
-################ INTLITERALEXPR ################
-   li $v0,1
-   li $s0,1
-   li $a0,5
+   li $a0,121
 ################ INTLITERALEXPR ################
    move $s2,$v0
    move $t2,$a0
 
 ########################## ASSIGNVARIABLESTMT ##########################
-########################## WHILESTMT ##########################
+########################## PRINTSTMT ##########################
+################ STRINGLITERAL ################
    li $v0,4
-   la $a3,true_string
-while_label_8:
-################ BINARYOPEXPR ################
+   la $a0,string_lit_label_1
+################ STRINGLITERAL ################
+   syscall
+########################## PRINTSTMT ##########################
+########################## PRINTSTMT ##########################
 ################ LABELEXPR ################
-   addi $a0,$t0,0
-   move $v0,$s0
-################ LABELEXPR ################
-################ LABELEXPR ################
-   addi $a1,$t2,0
+   addi $a0,$t2,0
    move $v0,$s2
 ################ LABELEXPR ################
-   blt $a0,$a1,general_label_78
-      li $v0,4
-      la $a0,false_string
-      j next_general_label_78
-   general_label_78:
-      li $v0,4
-      la $a0,true_string
-   next_general_label_78:
-################ BINARYOPEXPR ################
+   syscall
+########################## PRINTSTMT ##########################
+########################## PRINTSTMT ##########################
+################ STRINGLITERAL ################
    li $v0,4
-   la $a1,true_string
-   bne $a0,$a1,exit_while_label_8
+   la $a0,string_lit_label_2
+################ STRINGLITERAL ################
+   syscall
+########################## PRINTSTMT ##########################
+########################## PRINTLINESTMT ##########################
+   li $v0,4
+   la $a0, new_line_string
+   syscall
+########################## PRINTLINESTMT ##########################
 ########################## ASSIGNVARIABLESTMT ##########################
 ################ INTLITERALEXPR ################
    li $v0,1
    li $s0,1
    li $a0,0
 ################ INTLITERALEXPR ################
-   move $s1,$v0
-   move $t1,$a0
+   move $s0,$v0
+   move $t0,$a0
 
 ########################## ASSIGNVARIABLESTMT ##########################
 ########################## WHILESTMT ##########################
    li $v0,4
    la $a3,true_string
-while_label_9:
+while_label_1:
 ################ BINARYOPEXPR ################
 ################ LABELEXPR ################
-   addi $a0,$t1,0
-   move $v0,$s1
-################ LABELEXPR ################
-################ LABELEXPR ################
-   addi $a1,$t0,0
+   addi $a0,$t0,0
    move $v0,$s0
-################ LABELEXPR ################
-   ble $a0,$a1,general_label_79
-      li $v0,4
-      la $a0,false_string
-      j next_general_label_79
-   general_label_79:
-      li $v0,4
-      la $a0,true_string
-   next_general_label_79:
-################ BINARYOPEXPR ################
-   li $v0,4
-   la $a1,true_string
-   bne $a0,$a1,exit_while_label_9
-########################## PRINTSTMT ##########################
-################ STRINGLITERAL ################
-   li $v0,4
-   la $a0,string_lit_label_17
-################ STRINGLITERAL ################
-   syscall
-########################## PRINTSTMT ##########################
-########################## ASSIGNVARIABLESTMT ##########################
-################ BINARYOPEXPR ################
-################ LABELEXPR ################
-   addi $a0,$t1,0
-   move $v0,$s1
 ################ LABELEXPR ################
 ################ INTLITERALEXPR ################
    li $v0,1
    li $s1,1
-   li $a1,1
+   li $a1,6
 ################ INTLITERALEXPR ################
-   add $a0,$a0,$a1
+   ble $a0,$a1,general_label_1
+      li $v0,4
+      la $a0,false_string
+      j next_general_label_1
+   general_label_1:
+      li $v0,4
+      la $a0,true_string
+   next_general_label_1:
 ################ BINARYOPEXPR ################
+   li $v0,4
+   la $a1,true_string
+   bne $a0,$a1,exit_while_label_1
+########################## ASSIGNVARIABLESTMT ##########################
+################ FUNCTIONCALLEXPR ################
+################ LABELEXPR ################
+   addi $a0,$t0,0
+   move $v0,$s0
+################ LABELEXPR ################
+   jal factorial
+   addi $a0,$v1,0
+################ FUNCTIONCALLEXPR ################
    move $s1,$v0
    move $t1,$a0
 
 ########################## ASSIGNVARIABLESTMT ##########################
-   j while_label_9
-   exit_while_label_9:
-########################## WHILESTMT ##########################
+########################## IFELSETHENSTMT ##########################
+################ BINARYOPEXPR ################
+################ LABELEXPR ################
+   addi $a0,$t1,0
+   move $v0,$s1
+################ LABELEXPR ################
+################ LABELEXPR ################
+   addi $a1,$t2,0
+   move $v0,$s2
+################ LABELEXPR ################
+   blt $a0,$a1,general_label_2
+      li $v0,4
+      la $a0,false_string
+      j next_general_label_2
+   general_label_2:
+      li $v0,4
+      la $a0,true_string
+   next_general_label_2:
+################ BINARYOPEXPR ################
+   li $v0,4
+   la $a1,true_string
+   beq $a0,$a1,if_label_1
+########################## PRINTSTMT ##########################
+################ STRINGLITERAL ################
+   li $v0,4
+   la $a0,string_lit_label_3
+################ STRINGLITERAL ################
+   syscall
+########################## PRINTSTMT ##########################
+   j next_if_label_1
+   if_label_1:
+########################## PRINTSTMT ##########################
+################ LABELEXPR ################
+   addi $a0,$t0,0
+   move $v0,$s0
+################ LABELEXPR ################
+   syscall
+########################## PRINTSTMT ##########################
+   next_if_label_1:
+
+########################## IFELSETHENTSTMT ##########################
+########################## PRINTLINESTMT ##########################
+   li $v0,4
+   la $a0, new_line_string
+   syscall
+########################## PRINTLINESTMT ##########################
 ########################## ASSIGNVARIABLESTMT ##########################
 ################ BINARYOPEXPR ################
 ################ LABELEXPR ################
@@ -131,16 +157,86 @@ while_label_9:
    move $t0,$a0
 
 ########################## ASSIGNVARIABLESTMT ##########################
-########################## PRINTLINESTMT ##########################
-   li $v0,4
-   la $a0, new_line_string
-   syscall
-########################## PRINTLINESTMT ##########################
-   j while_label_8
-   exit_while_label_8:
+   j while_label_1
+   exit_while_label_1:
 ########################## WHILESTMT ##########################
 li $v0 10
 syscall  #terminating program normally
 fail_and_exit: li $a0 -1
 li $v0 17
 syscall  #terminating program with error
+############################### FUNCTIONDECL ################################
+factorial: nop
+   addi $sp, $sp,-4
+   sw $t0, 0($sp)
+   move $t0,$a0
+########################## IFELSETHENSTMT ##########################
+################ BINARYOPEXPR ################
+################ LABELEXPR ################
+   addi $a0,$t0,0
+   move $v0,$s0
+################ LABELEXPR ################
+################ INTLITERALEXPR ################
+   li $v0,1
+   li $s1,1
+   li $a1,0
+################ INTLITERALEXPR ################
+   beq $a0,$a1,general_label_4
+      li $v0,4
+      la $a0,false_string
+      j next_general_label_4
+   general_label_4:
+      li $v0,4
+      la $a0,true_string
+   next_general_label_4:
+################ BINARYOPEXPR ################
+   li $v0,4
+   la $a1,true_string
+   beq $a0,$a1,if_label_2
+########################## RETURNEXSTMT ##########################
+################ BINARYOPEXPR ################
+################ FUNCTIONCALLEXPR ################
+################ BINARYOPEXPR ################
+################ LABELEXPR ################
+   addi $a0,$t0,0
+   move $v0,$s0
+################ LABELEXPR ################
+################ INTLITERALEXPR ################
+   li $v0,1
+   li $s1,1
+   li $a1,1
+################ INTLITERALEXPR ################
+   sub $a0,$a0,$a1
+################ BINARYOPEXPR ################
+   jal factorial
+   addi $a0,$v1,0
+################ FUNCTIONCALLEXPR ################
+################ LABELEXPR ################
+   addi $a1,$t0,0
+   move $v0,$s0
+################ LABELEXPR ################
+   mul $a0,$a0,$a1
+################ BINARYOPEXPR ################
+   addi $v1,$a0,0
+   jr $ra
+########################## RETURNEXSTMT ##########################
+   j next_if_label_2
+   if_label_2:
+########################## RETURNEXSTMT ##########################
+################ INTLITERALEXPR ################
+   li $v0,1
+   li $s0,1
+   li $a0,1
+################ INTLITERALEXPR ################
+   addi $v1,$a0,0
+   jr $ra
+########################## RETURNEXSTMT ##########################
+   next_if_label_2:
+
+########################## IFELSETHENTSTMT ##########################
+factorial_end: 
+   lw $t0,0($sp)
+   addi $sp, $sp,4
+   addi $v0,$a0,0
+   jr $ra
+############################### FUNCTIONDECL ################################

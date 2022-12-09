@@ -3,7 +3,6 @@ package splat.parser.elements;
 import splat.executor.MIPSCode;
 import splat.executor.StackFrameInfo;
 import splat.lexer.Token;
-import splat.parser.elements.DECL.FunctionDecl;
 import splat.semanticanalyzer.SemanticAnalysisException;
 
 import java.util.Map;

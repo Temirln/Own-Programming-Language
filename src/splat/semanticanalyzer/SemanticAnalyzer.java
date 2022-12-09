@@ -3,10 +3,10 @@ package splat.semanticanalyzer;
 import java.util.*;
 
 import splat.parser.elements.*;
-import splat.parser.elements.DECL.FunctionDecl;
-import splat.parser.elements.DECL.VariableDecl;
-import splat.parser.elements.STMT.IfThenElseStmt;
-import splat.parser.elements.STMT.ReturnExStmt;
+import splat.parser.elements.FunctionDecl;
+import splat.parser.elements.VariableDecl;
+import splat.parser.elements.IfThenElseStmt;
+import splat.parser.elements.ReturnExStmt;
 
 
 public class SemanticAnalyzer {

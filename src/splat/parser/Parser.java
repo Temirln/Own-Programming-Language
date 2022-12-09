@@ -6,10 +6,8 @@ import java.util.List;
 
 import splat.lexer.Token;
 import splat.parser.elements.*;
-import splat.parser.elements.EXPR.*;
-import splat.parser.elements.DECL.FunctionDecl;
-import splat.parser.elements.STMT.*;
-import splat.parser.elements.DECL.VariableDecl;
+import splat.parser.elements.FunctionDecl;
+import splat.parser.elements.VariableDecl;
 
 public class Parser {
 
